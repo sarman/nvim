@@ -1,0 +1,12 @@
+{
+  "aaa": {
+    "body": "AAA(${1:content}${2:, attr})$0",
+    "description": "TEST AAA(content[, attr])",
+    "prefix": "aaa"
+  },
+  "ddd": {
+    "body": "DDD(${1:content}${2:, attr})$0",
+    "description": "TEST DDD(content[, attr])",
+    "prefix": "ddd"
+  }
+}

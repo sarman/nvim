@@ -1,0 +1,7 @@
+{
+  "whh": {
+    "prefix": "whh",
+    "description": "test",
+    "body": ["testwhile ${1:true} do", "\t$0", "end"]
+  }
+}
