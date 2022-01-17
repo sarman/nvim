@@ -58,24 +58,11 @@ ws.register({ ["<Leader>w"] = { ":w!<CR>", "Save" } })
 ws.register({ ["<Leader>q"] = { ":q!<CR>", "Quit" } })
 
 ws.register({
-	name = "Code",
-	f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
-	d = { "<cmd>Lspsaga lsp_finder<CR>", "Definition" },
-	p = { "<cmd>Lspsaga preview_definition<CR>", "Preview definition" },
-	a = { "<cmd>Lspsaga code_action<CR>", "Code action" },
-	A = { "<cmd>Lspsaga range_code_action<CR>", "Code range action" },
-	h = { "<cmd>Lspsaga hover_doc<CR>", "Hover doc" },
-	s = { "<cmd>Lspsaga signature_help<CR>", "Signature help" },
-	r = { "<cmd>Lspsaga rename<CR>", "Rename" },
-}, {
-	prefix = "<Leader>c",
-})
-
-ws.register({
 	name = "Git",
 	j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
 	k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-	l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
+	L = { "<cmd>Git blame<cr>", "Blame All" },
+	l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame line" },
 	p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
 	r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
 	R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
@@ -112,45 +99,46 @@ ws.register({
 		"<cmd>bdelete!<CR>",
 		"Close",
 	},
+	a = {
+		"<cmd>%bd<CR>",
+		"Close all",
+	},
 }, {
 	prefix = "<Leader>b",
 })
 
 ws.register({
-	name = "LSP",
+	name = "Code",
 	a = { "<cmd>CodeActionMenu<cr>", "Code Action" },
-	d = {
-		"<cmd>Telescope lsp_document_diagnostics<cr>",
+	d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+	f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
+	h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
+	e = { "<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>", "Buf references" },
+	f = {
+		"<cmd>Telescope diagnostics bufnr=0<cr>",
 		"Document Diagnostics",
 	},
 	w = {
-		"<cmd>Telescope lsp_workspace_diagnostics<cr>",
+		"<cmd>Telescope diagnostics<cr>",
 		"Workspace Diagnostics",
 	},
-	i = { "<cmd>LspInfo<cr>", "Info" },
-	I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
 	j = {
-		"<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>",
+		"<cmd>lua vim.diagnostic.goto_next()<cr>",
 		"Next Diagnostic",
 	},
 	k = {
-		"<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>",
+		"<cmd>lua vim.diagnostic.goto_prev()<cr>",
 		"Prev Diagnostic",
 	},
-	l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-	p = {
-		name = "Peek",
-		d = { "<cmd>lua require('lvim.lsp.peek').Peek('definition')<cr>", "Definition" },
-		t = { "<cmd>lua require('lvim.lsp.peek').Peek('typeDefinition')<cr>", "Type Definition" },
-		i = { "<cmd>lua require('lvim.lsp.peek').Peek('implementation')<cr>", "Implementation" },
-	},
-	q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-	r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-	s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-	S = {
-		"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-		"Workspace Symbols",
-	},
+	-- r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" }, // by lspsaga in plugins
+}, {
+	prefix = "<Leader>c",
+})
+
+ws.register({
+	name = "LSP",
+	i = { "<cmd>LspInfo<cr>", "Info" },
+	I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
 }, {
 	prefix = "<Leader>l",
 })

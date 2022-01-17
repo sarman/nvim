@@ -627,12 +627,12 @@ local function setup_packer(packer_bootstrap)
 			ft = "dart",
 		})
 
-		-- use({ -- highlight words by word under cursor
-		-- 	"yamatsum/nvim-cursorline",
-		-- 	opt = true,
-		-- 	event = "BufWinEnter",
-		-- 	disable = false,
-		-- })
+		use({ -- highlight words by word under cursor
+			"yamatsum/nvim-cursorline",
+			opt = true,
+			event = "BufWinEnter",
+			disable = false,
+		})
 
 		-- tree undo
 		use({
@@ -768,17 +768,16 @@ local function setup_packer(packer_bootstrap)
 			end,
 		})
 
-		-- nice commands popup
+		-- now wildermenu is pythonless with fzy-lua-native
 		use({
 			"gelguy/wilder.nvim",
 			config = function()
-				-- Use a vimscript file because of a bug with using line continuations
-				-- See https://github.com/gelguy/wilder.nvim/issues/53
-				-- TODO: use <sfile>
 				vim.cmd([[source $HOME/.config/nvim/wilder.vim]])
-
 				vim.cmd([[call wilder#main#start()]])
 			end,
+			requires = {
+				"romgrk/fzy-lua-native",
+			},
 			run = ":UpdateRemotePlugins",
 			event = "CmdlineEnter",
 		})
@@ -816,7 +815,7 @@ local function setup_packer(packer_bootstrap)
 			config = function()
 				local saga = require("lspsaga")
 				saga.init_lsp_saga({
-					code_action_prompt = { enable = false },
+					code_action_prompt = { enable = true },
 					finder_action_keys = {
 						open = "o",
 						vsplit = "s",
@@ -834,6 +833,16 @@ local function setup_packer(packer_bootstrap)
 						exec = "<CR>", -- quit can be a table
 					},
 				})
+
+				local ws = require("which-key")
+
+				ws.register({
+					name = "Code",
+					g = { "<cmd>Lspsaga lsp_finder<CR>", "Finder" },
+					r = { "<cmd>Lspsaga rename<CR>", "Rename" },
+				}, {
+					prefix = "<Leader>c",
+				})
 			end,
 		})
 
@@ -846,24 +855,6 @@ local function setup_packer(packer_bootstrap)
 			null_ls.builtins.code_actions.gitsigns,
 		}
 		null_ls.setup({ sources = sources })
-
-		use({
-			"nvim-lua/lsp_extensions.nvim",
-			config = function()
-				local inlay_hints_options = {
-					prefix = "",
-					highlight = "Comment",
-					enabled = { "TypeHint", "ChainingHint", "ParameterHint" },
-				}
-				vim.cmd("augroup LspExtensions")
-				vim.cmd("autocmd!")
-				vim.cmd(
-					[[autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints ]]
-						.. vim.inspect(inlay_hints_options, { newline = "" })
-				)
-				vim.cmd("augroup END")
-			end,
-		})
 
 		-- sudo npm i intelephense -g
 		local lsp_installer = require("nvim-lsp-installer")
@@ -1157,14 +1148,6 @@ local function setup_packer(packer_bootstrap)
 			end,
 		})
 
-		-- This tiny plugin adds vscode-like pictograms to neovim built-in lsp autocomplete popups
-		use({
-			"onsails/lspkind-nvim",
-			config = function()
-				require("lspkind").init()
-			end,
-		})
-
 		-- This plugin provides a handy pop-up menu for code actions.
 		-- I run it on leader+l+a
 		-- alternative is telescope lsp actions leader+f+a
@@ -1352,6 +1335,26 @@ local function setup_packer(packer_bootstrap)
 					r = { ":WinResizerStartResize<CR>", "WinResizer" },
 				}, {
 					prefix = "<C-w>",
+				})
+			end,
+		})
+
+		-- automatically creates missing directories on saving a file (similar to mkdir -p on linux).
+		use("jghauser/mkdir.nvim")
+
+		--  in-editor annotations usually at the end of a closing tag/bracket/parenthesis/etc
+		use({
+			"code-biscuits/nvim-biscuits",
+			config = function()
+				require("nvim-biscuits").setup({
+					-- toggle_keybind = "<leader>cb",
+					show_on_start = true, -- defaults to false
+				})
+
+				require("which-key").register({
+					b = { "<cmd>lua require('nvim-biscuits').toggle_biscuits()<CR>", "Annotate bisquits" },
+				}, {
+					prefix = "<leader>c",
 				})
 			end,
 		})

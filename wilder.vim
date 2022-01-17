@@ -1,41 +1,41 @@
 set wildcharm=<Tab>
-cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
 
-call wilder#setup({'modes': ['/', '?', ':']})
+" Default keys
+call wilder#setup({
+      \ 'modes': [':', '/', '?'],
+      \ 'next_key': '<Tab>',
+      \ 'previous_key': '<S-Tab>',
+      \ 'accept_key': '<Down>',
+      \ 'reject_key': '<Up>',
+      \ })
+
+
 call wilder#set_option('pipeline', [
       \   wilder#branch(
-      \     wilder#python_file_finder_pipeline({
-      \       'file_command': {_, arg -> stridx(arg, '.') != -1 ? ['fd', '-tf', '-H'] : ['fd', '-tf']},
-      \       'dir_command': ['fd', '-td'],
-      \       'filters': ['fuzzy_filter', 'difflib_sorter'],
-      \	      'path': '',
-      \     }),
       \     wilder#cmdline_pipeline({
       \       'fuzzy': 1,
+      \       'fuzzy_filter': wilder#lua_fzy_filter(),
       \     }),
-      \     wilder#python_search_pipeline(),
+      \     wilder#vim_search_pipeline(),
       \   ),
       \ ])
 
-let s:search_renderer = wilder#wildmenu_renderer({
-    \   'mode': 'statusline',
-    \   'right': [' ', wilder#wildmenu_index()],
-    \   'apply_incsearch_fix': v:true,
-    \ })
-
 call wilder#set_option('renderer', wilder#renderer_mux({
-    \ ':': wilder#popupmenu_renderer({
-    \   'highlighter': wilder#basic_highlighter(),
-    \   'left': [
-    \     ' ', wilder#popupmenu_devicons(),
-    \   ],
-    \   'right': [
-    \     ' ', wilder#popupmenu_scrollbar(),
-    \   ],
-    \ }),
-    \ '/': s:search_renderer,
-    \ '?': s:search_renderer,
-    \ }))
+      \ ':': wilder#popupmenu_renderer({
+      \   'highlighter': wilder#lua_fzy_highlighter(),'highlights': {
+      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#f4468f'}]),
+      \ },
+      \   'left': [
+      \     ' ',
+      \     wilder#popupmenu_devicons(),
+      \   ],
+      \   'right': [
+      \     ' ',
+      \     wilder#popupmenu_scrollbar(),
+      \   ],
+      \ }),
+      \ '/': wilder#wildmenu_renderer({
+      \   'highlighter': wilder#lua_fzy_highlighter(),
+      \ }),
+      \ }))
 
-" vim: tabstop=2,expandtab,softtabstop=2,shiftwidth=2
