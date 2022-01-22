@@ -114,7 +114,7 @@ ws.register({
 	f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
 	h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
 	e = { "<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>", "Buf references" },
-	f = {
+	i = {
 		"<cmd>Telescope diagnostics bufnr=0<cr>",
 		"Document Diagnostics",
 	},

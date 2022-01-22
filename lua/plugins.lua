@@ -308,14 +308,6 @@ local function setup_packer(packer_bootstrap)
 			end,
 		})
 
-		use({ -- jumper leader+j
-			"phaazon/hop.nvim",
-			config = function()
-				require("hop").setup()
-				require("which-key").register({ ["<Leader>j"] = { ":HopWord<CR>", "HopWord" } })
-			end,
-		})
-
 		-- ]q is :cnext. [q is :cprevious. ]a is :next.
 		-- [b is :bprevious. See the documentation for the full
 		-- set of 20 mappings and mnemonics. All of them take a count.
@@ -608,7 +600,7 @@ local function setup_packer(packer_bootstrap)
 			config = function()
 				local tabnine = require("cmp_tabnine.config")
 				tabnine:setup({
-					max_lines = 1000,
+					max_lines = 2000,
 					max_num_results = 20,
 					sort = true,
 				})
@@ -1359,24 +1351,20 @@ local function setup_packer(packer_bootstrap)
 			end,
 		})
 
-		-- A small Neovim plugin for previewing native LSP's goto definition calls in floating windows.
-		-- use({
-		-- 	"rmagatti/goto-preview",
-		-- 	config = function()
-		-- 		require("which-key").register({
-		-- 			["gpd"] = {
-		-- 				[[<cmd>lua require('goto-preview').goto_preview_definition()<CR>]],
-		-- 				"Preview definitions",
-		-- 			},
-		-- 			["gpi"] = {
-		-- 				[[<cmd>lua require('goto-preview').goto_preview_implementation()<CR>]],
-		-- 				"Preview implementations",
-		-- 			},
-		-- 			["gP"] = { [[<cmd>lua require('goto-preview').close_all_win()<CR>]], "Close preview windows" },
-		-- 		})
-		-- 		require("goto-preview").setup({})
-		-- 	end,
-		-- })
+		-- acejump like, :Pounce command, or leader+j
+		use({
+			"rlane/pounce.nvim",
+			config = function()
+				require("pounce").setup({
+					accept_keys = "qwertyuiopasdfghjklzxcvbnm",
+					accept_best_key = "<enter>",
+					multi_window = true,
+					debug = false,
+				})
+				require("which-key").register({ ["<Leader>j"] = { ":Pounce<CR>", "Pounce" } })
+				require("which-key").register({ ["<Leader>r"] = { ":PounceRepeat<CR>", "Pounce Repeat" } })
+			end,
+		})
 
 		-- https://github.com/wbthomason/packer.nvim#bootstrapping
 		if packer_bootstrap then
