@@ -876,91 +876,92 @@ local function setup_packer(packer_bootstrap)
 		-- cmd = {'~/.cache/composer/files/phpactor', 'language-server'}
 		--}
 
-		-- local nvim_lsp = require("lspconfig")
-		-- nvim_lsp.intelephense.setup({
-		-- 	settings = {
-		-- 		intelephense = {
-		-- 			format = {
-		-- 				enable = true,
-		-- 			},
-		-- 			--      diagnostics = {
-		-- 			--  undefinedClassConstants= false,
-		-- 			--  undefinedConstants= false,
-		-- 			--  undefinedFunctions= false,
-		-- 			--  undefinedMethods= false,
-		-- 			--  undefinedProperties= false,
-		-- 			--  undefinedTypes= false,
-		-- 			-- },
-		-- 			stubs = {
-		-- 				"bcmath",
-		-- 				"bz2",
-		-- 				"calendar",
-		-- 				"Core",
-		-- 				"curl",
-		-- 				"date",
-		-- 				"dba",
-		-- 				"dom",
-		-- 				"enchant",
-		-- 				"fileinfo",
-		-- 				"filter",
-		-- 				"ftp",
-		-- 				"gd",
-		-- 				"gettext",
-		-- 				"hash",
-		-- 				"iconv",
-		-- 				"imap",
-		-- 				"intl",
-		-- 				"json",
-		-- 				"ldap",
-		-- 				"libxml",
-		-- 				"mbstring",
-		-- 				"mcrypt",
-		-- 				"mysql",
-		-- 				"mysqli",
-		-- 				"password",
-		-- 				"pcntl",
-		-- 				"pcre",
-		-- 				"PDO",
-		-- 				"pdo_mysql",
-		-- 				"Phar",
-		-- 				"readline",
-		-- 				"recode",
-		-- 				"Reflection",
-		-- 				"regex",
-		-- 				"session",
-		-- 				"SimpleXML",
-		-- 				"soap",
-		-- 				"sockets",
-		-- 				"sodium",
-		-- 				"SPL",
-		-- 				"standard",
-		-- 				"superglobals",
-		-- 				"sysvsem",
-		-- 				"sysvshm",
-		-- 				"tokenizer",
-		-- 				"xml",
-		-- 				"xdebug",
-		-- 				"xmlreader",
-		-- 				"xmlwriter",
-		-- 				"yaml",
-		-- 				"zip",
-		-- 				"zlib",
-		-- 				"wordpress",
-		-- 				"woocommerce",
-		-- 				"acf-pro",
-		-- 				"wordpress-globals",
-		-- 				"wp-cli",
-		-- 				"genesis",
-		-- 				"polylang",
-		-- 			},
-		-- 			files = {
-		-- 				maxSize = 5000000,
-		-- 			},
-		-- 		},
-		-- 	},
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- })
+		local nvim_lsp = require("lspconfig")
+
+		nvim_lsp.intelephense.setup({
+			settings = {
+				intelephense = {
+					format = {
+						enable = true,
+					},
+					--      diagnostics = {
+					--  undefinedClassConstants= false,
+					--  undefinedConstants= false,
+					--  undefinedFunctions= false,
+					--  undefinedMethods= false,
+					--  undefinedProperties= false,
+					--  undefinedTypes= false,
+					-- },
+					stubs = {
+						"bcmath",
+						"bz2",
+						"calendar",
+						"Core",
+						"curl",
+						"date",
+						"dba",
+						"dom",
+						"enchant",
+						"fileinfo",
+						"filter",
+						"ftp",
+						"gd",
+						"gettext",
+						"hash",
+						"iconv",
+						"imap",
+						"intl",
+						"json",
+						"ldap",
+						"libxml",
+						"mbstring",
+						"mcrypt",
+						"mysql",
+						"mysqli",
+						"password",
+						"pcntl",
+						"pcre",
+						"PDO",
+						"pdo_mysql",
+						"Phar",
+						"readline",
+						"recode",
+						"Reflection",
+						"regex",
+						"session",
+						"SimpleXML",
+						"soap",
+						"sockets",
+						"sodium",
+						"SPL",
+						"standard",
+						"superglobals",
+						"sysvsem",
+						"sysvshm",
+						"tokenizer",
+						"xml",
+						"xdebug",
+						"xmlreader",
+						"xmlwriter",
+						"yaml",
+						"zip",
+						"zlib",
+						"wordpress",
+						"woocommerce",
+						"acf-pro",
+						"wordpress-globals",
+						"wp-cli",
+						"genesis",
+						"polylang",
+					},
+					files = {
+						maxSize = 5000000,
+					},
+				},
+			},
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 
 		-- use({
 		-- 	"stephpy/vim-php-cs-fixer",
@@ -1084,61 +1085,61 @@ local function setup_packer(packer_bootstrap)
 		})
 
 		-- highlight function params
-		use({
-			"ray-x/lsp_signature.nvim",
-			config = function()
-				-- vim.cmd([[highlight! link LspSignatureActiveParameter WildMenu]])
-				require("lsp_signature").setup({
-					debug = false, -- set to true to enable debug logging
-					log_path = "debug_log_file_path", -- debug log path
-					verbose = false, -- show debug line number
+		-- use({
+		-- 	"ray-x/lsp_signature.nvim",
+		-- 	config = function()
+		-- 		-- vim.cmd([[highlight! link LspSignatureActiveParameter WildMenu]])
+		-- 		require("lsp_signature").setup({
+		-- 			debug = false, -- set to true to enable debug logging
+		-- 			log_path = "debug_log_file_path", -- debug log path
+		-- 			verbose = false, -- show debug line number
 
-					bind = true, -- This is mandatory, otherwise border config won't get registered.
-					-- If you want to hook lspsaga or other signature handler, pls set to false
-					doc_lines = 10, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
-					-- set to 0 if you DO NOT want any API comments be shown
-					-- This setting only take effect in insert mode, it does not affect signature help in normal
-					-- mode, 10 by default
+		-- 			bind = true, -- This is mandatory, otherwise border config won't get registered.
+		-- 			-- If you want to hook lspsaga or other signature handler, pls set to false
+		-- 			doc_lines = 10, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
+		-- 			-- set to 0 if you DO NOT want any API comments be shown
+		-- 			-- This setting only take effect in insert mode, it does not affect signature help in normal
+		-- 			-- mode, 10 by default
 
-					floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+		-- 			floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
 
-					floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
-					-- will set to true when fully tested, set to false will use whichever side has more space
-					-- this setting will be helpful if you do not want the PUM and floating win overlap
-					fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
-					hint_enable = true, -- virtual hint enable
-					hint_prefix = "🐼 ", -- Panda for parameter
-					hint_scheme = "String",
-					use_lspsaga = false, -- set to true if you want to use lspsaga popup
-					hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
-					max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
-					-- to view the hiding contents
-					max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
-					handler_opts = {
-						border = "rounded", -- double, rounded, single, shadow, none
-					},
+		-- 			floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
+		-- 			-- will set to true when fully tested, set to false will use whichever side has more space
+		-- 			-- this setting will be helpful if you do not want the PUM and floating win overlap
+		-- 			fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
+		-- 			hint_enable = true, -- virtual hint enable
+		-- 			hint_prefix = "🐼 ", -- Panda for parameter
+		-- 			hint_scheme = "String",
+		-- 			use_lspsaga = false, -- set to true if you want to use lspsaga popup
+		-- 			hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
+		-- 			max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
+		-- 			-- to view the hiding contents
+		-- 			max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+		-- 			handler_opts = {
+		-- 				border = "rounded", -- double, rounded, single, shadow, none
+		-- 			},
 
-					always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58
+		-- 			always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58
 
-					auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
-					extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-					zindex = 200, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
+		-- 			auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
+		-- 			extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+		-- 			zindex = 200, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
 
-					padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
+		-- 			padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
 
-					transparency = nil, -- disabled by default, allow floating win transparent value 1~100
-					shadow_blend = 36, -- if you using shadow as border use this set the opacity
-					shadow_guibg = "Black", -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
-					timer_interval = 200, -- default timer check interval set to lower value if you want to reduce latency
-					toggle_key = nil, -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
-				}) -- no need to specify bufnr if you don't use toggle_key
+		-- 			transparency = nil, -- disabled by default, allow floating win transparent value 1~100
+		-- 			shadow_blend = 36, -- if you using shadow as border use this set the opacity
+		-- 			shadow_guibg = "Black", -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
+		-- 			timer_interval = 200, -- default timer check interval set to lower value if you want to reduce latency
+		-- 			toggle_key = nil, -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
+		-- 		}) -- no need to specify bufnr if you don't use toggle_key
 
-				-- You can also do this inside lsp on_attach
-				-- note: on_attach deprecated
-				-- require("lsp_signature").on_attach(cfg, bufnr) -- no need to specify bufnr if you don't use toggle_key
-				-- require("lsp_signature").status_line(max_width)
-			end,
-		})
+		-- 		-- You can also do this inside lsp on_attach
+		-- 		-- note: on_attach deprecated
+		-- 		-- require("lsp_signature").on_attach(cfg, bufnr) -- no need to specify bufnr if you don't use toggle_key
+		-- 		-- require("lsp_signature").status_line(max_width)
+		-- 	end,
+		-- })
 
 		-- This plugin provides a handy pop-up menu for code actions.
 		-- I run it on leader+l+a
@@ -1165,7 +1166,7 @@ local function setup_packer(packer_bootstrap)
 				vim.o.foldlevel = 20
 
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = "maintained",
+					ensure_installed = "all",
 					highlight = {
 						enable = false,
 					},
@@ -1312,7 +1313,19 @@ local function setup_packer(packer_bootstrap)
 				vim.g.auto_ctags = 1
 				vim.g.auto_ctags_directory_list = { ".git" }
 				vim.g.auto_ctags_set_tags_option = 1
-				vim.g.auto_ctags_tags_args = { "--tag-relative=yes", "--recurse=yes", "--sort=yes" }
+				vim.g.auto_ctags_tags_args = {
+					"--tag-relative=yes",
+					"--recurse=yes",
+					"--sort=yes",
+					"--exclude=.git",
+					"--exclude=node_modules",
+					"--exclude=vendor",
+					"--exclude=composer",
+					"--exclude=docs",
+					"--exclude=.svelte-kit",
+					"--exclude=.vscode",
+					"--exclude=.idea",
+				}
 			end,
 		})
 
@@ -1351,6 +1364,15 @@ local function setup_packer(packer_bootstrap)
 			end,
 		})
 
+		-- highlight parens html tags
+		use({
+			"leafOfTree/vim-matchtag",
+			config = function()
+				vim.g.vim_matchtag_enable_by_default = 1
+				vim.g.vim_matchtag_files = "*.html,*.xml,*.js,*.jsx,*.vue,*.svelte"
+			end,
+		})
+
 		-- acejump like, :Pounce command, or leader+j
 		use({
 			"rlane/pounce.nvim",
@@ -1363,6 +1385,34 @@ local function setup_packer(packer_bootstrap)
 				})
 				require("which-key").register({ ["<Leader>j"] = { ":Pounce<CR>", "Pounce" } })
 				require("which-key").register({ ["<Leader>r"] = { ":PounceRepeat<CR>", "Pounce Repeat" } })
+			end,
+		})
+
+		-- surround selection by tag, quotes, etc
+		-- https://github.com/tpope/vim-surround/blob/master/README.markdown
+		-- simple select lines, then S and tag
+		use("tpope/vim-surround")
+
+		-- A tiny Neovim plugin to deal with treesitter units
+		-- viu to select the inner unit
+		-- cau to change the outer unit
+		use({
+			"David-Kunz/treesitter-unit",
+			config = function()
+				vim.api.nvim_set_keymap("x", "iu", ':lua require"treesitter-unit".select()<CR>', { noremap = true })
+				vim.api.nvim_set_keymap("x", "au", ':lua require"treesitter-unit".select(true)<CR>', { noremap = true })
+				vim.api.nvim_set_keymap(
+					"o",
+					"iu",
+					':<c-u>lua require"treesitter-unit".select()<CR>',
+					{ noremap = true }
+				)
+				vim.api.nvim_set_keymap(
+					"o",
+					"au",
+					':<c-u>lua require"treesitter-unit".select(true)<CR>',
+					{ noremap = true }
+				)
 			end,
 		})
 
